@@ -9,31 +9,23 @@ void main(){
 }
 
 
-final counterProvider = StateProvider<int>((ref) {
+final counterProvider = StateProvider((Ref ref){
   return 0;
 });
 
-class MyApp extends ConsumerWidget {
-  const MyApp({super.key});
-
+class MyApp extends ConsumerWidget{
   @override
-  Widget build(BuildContext context,WidgetRef ref) {
-    print("Build method called");
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Rebuild Widgets"),
-        ),
-        floatingActionButton: FloatingActionButton(
+      appBar: AppBar(
+        title: Text("Rebuild Widgets"),
+      ),
+      floatingActionButton: FloatingActionButton(
           onPressed: (){
-            ref.read(counterProvider.notifier).state ++;
+
           },child: Icon(Icons.add),),
-        body: Center(child:
-        Consumer(
-          builder: (ctx,provider,child){
-            final counter = provider.watch(counterProvider);
-            print("Consumer Method called");
-            return Text("$counter");
-          },))
     );
+
   }
+
 }
