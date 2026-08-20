@@ -20,20 +20,20 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context,WidgetRef ref) {
     print("Build method called");
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Rebuild Widgets"),
-      ),
-      floatingActionButton: FloatingActionButton(
+        appBar: AppBar(
+          title: Text("Rebuild Widgets"),
+        ),
+        floatingActionButton: FloatingActionButton(
           onPressed: (){
             ref.read(counterProvider.notifier).state ++;
           },child: Icon(Icons.add),),
-      body: Center(child:
-      Consumer(
+        body: Center(child:
+        Consumer(
           builder: (ctx,provider,child){
             final counter = provider.watch(counterProvider);
             print("Consumer Method called");
             return Text("$counter");
-      },))
+          },))
     );
   }
 }
