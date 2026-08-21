@@ -16,16 +16,23 @@ final counterProvider = StateProvider((Ref ref){
 class MyApp extends ConsumerWidget{
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // final count = ref.watch(counterProvider);
+    print("Build method called");
     return Scaffold(
       appBar: AppBar(
         title: Text("Rebuild Widgets"),
       ),
       floatingActionButton: FloatingActionButton(
           onPressed: (){
-
+            ref.read(counterProvider.notifier).state ++;
           },child: Icon(Icons.add),),
+      body: Center(child: Consumer(
+          builder: (ctx,provider,child){
+            final count = provider.watch(counterProvider);
+            print("Consumer Method  called");
+            return Text("$count");
+          },
+          )),
     );
-
   }
-
 }
