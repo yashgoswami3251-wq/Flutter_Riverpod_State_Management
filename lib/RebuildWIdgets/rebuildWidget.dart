@@ -5,34 +5,37 @@ import 'package:flutter_riverpod/legacy.dart';
 import 'package:state_management_flutter/StaticProvider/static_provider.dart';
 
 void main(){
-  runApp(ProviderScope(child: MaterialApp(home: MyApp())));
+  runApp(ProviderScope(child: MaterialApp(debugShowCheckedModeBanner:false ,home: MyApp())));
 }
 
-
-final counterProvider = StateProvider((Ref ref){
+final counterprovider = StateProvider((Ref ref){
   return 0;
 });
 
 class MyApp extends ConsumerWidget{
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final count = ref.watch(counterProvider);
-    print("Build method called");
+    // var count = ref.watch(counterprovider);
+    print("Build Method Called");
     return Scaffold(
       appBar: AppBar(
-        title: Text("Rebuild Widgets"),
+        title: Center(child: Text("Counter App")),
+        backgroundColor: Colors.blue,
       ),
+
+      body: Center(
+        child: Consumer(
+            builder: (ctx,provider,_){
+              print("Consumer method called");
+              final count = provider.watch(counterprovider);
+              return Text(count.toString());
+            },
+      ),
+    ),
       floatingActionButton: FloatingActionButton(
-          onPressed: (){
-            ref.read(counterProvider.notifier).state ++;
-          },child: Icon(Icons.add),),
-      body: Center(child: Consumer(
-          builder: (ctx,provider,child){
-            final count = provider.watch(counterProvider);
-            print("Consumer Method  called");
-            return Text("$count");
-          },
-          )),
+        onPressed: (){
+          ref.read(counterprovider.notifier).state++;
+        },child: Icon(Icons.add),),
     );
   }
 }
