@@ -1,56 +1,44 @@
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
 void main(){
-  runApp(ProviderScope(child: MaterialApp(home: consumerstatefull())));
+  runApp(ProviderScope(child: MaterialApp(home: consumerstatefulwidget())));
 }
 
-class consumerstatefull extends ConsumerStatefulWidget {
-  const consumerstatefull({super.key});
+var consumerstate = StateProvider((Ref ref){
+  return "";
+});
 
+
+class consumerstatefulwidget extends ConsumerStatefulWidget {
+  const consumerstatefulwidget({super.key});
   @override
-  ConsumerState<consumerstatefull> createState() => _consumerstatefullState();
+  ConsumerState<consumerstatefulwidget> createState() => _consumerstatefulwidgetState();
 }
 
-final textprovider = StateProvider((Ref ref){
-  return '';
-});
+class _consumerstatefulwidgetState extends ConsumerState<consumerstatefulwidget> {
 
-final secondprovider = StateProvider((Ref ref){
-  return '';
-});
-
-class _consumerstatefullState extends ConsumerState<consumerstatefull> {
-
-  late final TextEditingController _namecontroller;
-  late final TextEditingController _emailcontroller;
+  late final TextEditingController _controller;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _namecontroller = TextEditingController();
-    _namecontroller.addListener((){
-      ref.read(textprovider.notifier).state = _namecontroller.text;
+    _controller = TextEditingController();
+    _controller.addListener((){
+      ref.read(consumerstate.notifier).state = _controller.text;
     });
-
-    _emailcontroller = TextEditingController();
-    _emailcontroller.addListener((){
-      ref.read(secondprovider.notifier).state = _emailcontroller.text;
-    });
+    
   }
 
   @override
   Widget build(BuildContext context) {
-    // final text = ref.watch(textprovider)
-    print("Build method called");
+    var text = ref.watch(consumerstate);
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text("TextField")),
+        title: Text("Consumer Statefull widget"),
       ),
       body: Center(
         child: Column(
@@ -58,32 +46,17 @@ class _consumerstatefullState extends ConsumerState<consumerstatefull> {
           children: [
             SizedBox(
               width: 300,
-              child: TextField(
-                controller: _namecontroller,
+              child: TextFormField(
+                controller: _controller,
+                decoration: InputDecoration(
+                  label: Text("Enter Text"),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(11)
+                  )
+                ),
               ),
             ),
-            SizedBox(height: 10,),
-            Consumer(
-                builder: (ctx,provider,_){
-                  final text = provider.watch(textprovider);
-                  print("Consumer Method called");
-                  return Text("Type Name...$text",style: TextStyle(fontSize: 23),);
-                },
-            ),
-            
-            SizedBox(
-                width: 300,
-                child: TextField(
-                  controller: _emailcontroller,
-                )
-            ),
-            SizedBox(height: 10,),
-            Consumer(
-                builder: (ctx,provider,_){
-                  final email = provider.watch(secondprovider);
-                  return Text("Type Email...$email",style: TextStyle(fontSize: 23),);
-                },
-            )
+            Text("You Typed : $text")
           ],
         ),
       ),
