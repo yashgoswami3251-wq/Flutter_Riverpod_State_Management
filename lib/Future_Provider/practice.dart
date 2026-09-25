@@ -8,9 +8,7 @@ void main(){
 
 Future<List<String>> fetchUsers() async {
 
-  await Future.delayed(
-    const Duration(seconds: 2),
-  );
+  await Future.delayed(const Duration(seconds: 2),);
 
   return [
     "Yash",
