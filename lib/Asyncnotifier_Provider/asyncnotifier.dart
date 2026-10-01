@@ -18,13 +18,17 @@ class asyncnotifier extends AsyncNotifier<String>{
   }
 
   Future<void> refreshGreeting() async {
-    try{
+    state = AsyncValue.loading();
+    state = await AsyncValue.guard(()=> ref.read(apiprovider).fetchGreeting());
+
+    /*try{
       state = AsyncValue.loading();
       final value = await ref.read(apiprovider).fetchGreeting();
       state = AsyncValue.data(value);
     }catch(e){
       state = AsyncError(e, StackTrace.current);
-  }
+  }*/
+
 }
 }
 
@@ -43,7 +47,7 @@ class asyncclass  extends ConsumerWidget{
       ),
       body: Center(
         child:greetingasync.when(
-            skipLoadingOnRefresh: false,
+          skipLoadingOnRefresh: false,
             data: (data) => Text(data,style: TextStyle(fontSize: 23),),
             error: (e,_)=>Text(e.toString(),style: TextStyle(fontSize: 23),),
             loading:() => CircularProgressIndicator()),),
