@@ -13,7 +13,7 @@ class _todoscreenState extends State<todoscreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text("No todo's Add"),
+        child: Text("No todo's Yet"),
       ),
     );
   }

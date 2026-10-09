@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:state_management_flutter/Todo_Application/Theme/app_theme.dart';
 import 'package:state_management_flutter/Todo_Application/todo_screen.dart';
 
 class MyApp extends StatefulWidget {
@@ -15,6 +16,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.dark,
+      darkTheme: AppTheme.themeData,
       home: todoscreen(),
     );
   }
