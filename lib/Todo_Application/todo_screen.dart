@@ -29,7 +29,7 @@ class _todoscreenState extends State<todoscreen> {
               /// Todo tile
               SizedBox(height: 10,),
               Expanded(
-                child: ListView.builder(itemCount: 5, itemBuilder: (context,index){
+                child: ListView.builder(itemCount: 1, itemBuilder: (context,index){
                   return TodoTile();
                 }),
               )

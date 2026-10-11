@@ -1,35 +1,45 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'todo_adding.dart';
 
-class TodoTile extends StatelessWidget {
+class TodoTile extends ConsumerWidget {
   const TodoTile({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final todos = ref.watch(addprovider);
+    final texttheme = Theme.of(context).textTheme;
 
-    final theme = Theme.of(context);
-    final texttheme = theme.textTheme;
+    if (todos.isEmpty) {
+      return const Center(
+        child: Text('No todos added yet'),
+      );
+    }
 
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Expanded(
-          child: Row(
-            children: [
-              Checkbox(
-                  shape: CircleBorder(),
-                  value: false, onChanged: (_){}),
-              Expanded(
-                child: Text("Task",style: texttheme.bodyMedium?.copyWith(
-                  decoration: TextDecoration.none
-                )),
-              ),
-              IconButton(onPressed: (){}, icon: Icon(Icons.edit)),
-              IconButton(onPressed: (){}, icon: Icon(Icons.delete_outline)),
-            ],
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: todos.length,
+      itemBuilder: (context, index) {
+        return Card(
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: Row(
+              children: [
+                Checkbox(value: false, onChanged: (_){}),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    todos[index],
+                    style: texttheme.bodyMedium,
+                  ),
+                ),
+                IconButton(onPressed: (){}, icon: Icon(Icons.edit)),
+                IconButton(onPressed: (){},icon: Icon(Icons.delete_outline),)
+              ],
+            ),
           ),
-        )
-      ),
+        );
+      },
     );
   }
 }
