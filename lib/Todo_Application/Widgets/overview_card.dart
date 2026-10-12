@@ -1,11 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:state_management_flutter/Todo_Application/Widgets/todo_adding.dart';
 
-class OverviewCard extends StatelessWidget {
+class OverviewCard extends ConsumerStatefulWidget {
   const OverviewCard({super.key});
 
   @override
+  ConsumerState<OverviewCard> createState() => _OverviewCardState();
+}
+
+class _OverviewCardState extends ConsumerState<OverviewCard> {
+  @override
   Widget build(BuildContext context) {
+
+    final todos = ref.watch(addprovider).length;
+
     final theme = Theme.of(context);
     final texttheme = theme.textTheme;
     final colorschema = theme.colorScheme;
@@ -38,7 +48,7 @@ class OverviewCard extends StatelessWidget {
                 color: colorschema.primary,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Text("0/10",style: texttheme.bodyLarge?.copyWith(
+              child: Text("$todos/10",style: texttheme.bodyLarge?.copyWith(
                   fontWeight: FontWeight.bold
               ),),
             )
