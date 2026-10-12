@@ -15,11 +15,6 @@ class todoscreen extends StatefulWidget {
 class _todoscreenState extends State<todoscreen> {
   @override
   Widget build(BuildContext context) {
-
-    final theme = Theme.of(context);
-    final texttheme = theme.textTheme;
-    final colorschema = theme.colorScheme;
-
     return Scaffold(
       body: SafeArea(
           child: Column(

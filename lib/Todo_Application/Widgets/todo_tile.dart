@@ -33,7 +33,12 @@ class TodoTile extends ConsumerWidget {
                     style: texttheme.bodyMedium,
                   ),
                 ),
-                IconButton(onPressed: (){}, icon: Icon(Icons.edit)),
+                IconButton(onPressed: (){
+                  showDialog(context: context, builder: (context)=>edittodo(
+                    index: index,
+                    currenttext: todos[index].toString(),
+                  ));
+                }, icon: Icon(Icons.edit)),
                 IconButton(onPressed: (){},icon: Icon(Icons.delete_outline),)
               ],
             ),
