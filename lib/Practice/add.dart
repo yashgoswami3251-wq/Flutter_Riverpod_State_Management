@@ -33,7 +33,12 @@ class _practiceState extends ConsumerState<practice> {
           child: Row(
             children: [
               Expanded(child: Text(text[index])),
-              Icon(Icons.edit),
+              IconButton(onPressed: (){
+                showDialog(context: context, builder: (context)=>edittext(
+                  index: index,
+                  currenttext: text[index].toString(),
+                ));
+              }, icon: Icon(Icons.edit)),
               SizedBox(width: 20,),
               Icon(Icons.delete_outline),
             ],

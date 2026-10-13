@@ -47,7 +47,7 @@ class _TodoAddingState extends ConsumerState<TodoAdding> {
                       final title = textcontroller.text;
                       if(title.isEmpty){
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please enter title")));
-                        return;
+                        return Navigator.of(context).pop();
                       }
 
                       final currenttodos = ref.read(addprovider);
@@ -66,10 +66,11 @@ class _TodoAddingState extends ConsumerState<TodoAdding> {
 }
 
 class edittodo extends ConsumerStatefulWidget {
+
   final int index;
   final String currenttext;
 
-  const edittodo({super.key, required this.index, required this.currenttext});
+  edittodo({super.key, required this.index, required this.currenttext});
 
   @override
   ConsumerState<edittodo> createState() => _edittodoState();
@@ -120,7 +121,7 @@ class _edittodoState extends ConsumerState<edittodo> {
                     final newtext = textcontroller.text.trim();
 
                     if(newtext.isEmpty){
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please enter New Value")));
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please enter New value")));
                     }
 
                     final currenttext = ref.read(addprovider);
