@@ -144,8 +144,6 @@ class _deletetextState extends ConsumerState<deletetext> {
   @override
   Widget build(BuildContext context) {
 
-    bool isagree = false;
-
     return Dialog(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -155,18 +153,13 @@ class _deletetextState extends ConsumerState<deletetext> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ElevatedButton(onPressed: (){
-                isagree = true;
-                if(isagree == true){
                   ref.read(textprovider.notifier).state.removeAt(widget.index);
                   ref.read(textprovider.notifier).update((state)=>[...state]);
-
                   Navigator.of(context).pop();
-                }
               }, child: Text("Agree")),
               SizedBox(width: 15,),
               ElevatedButton(onPressed: (){
                 Navigator.of(context).pop();
-                isagree = false;
               }, child: Text("DisAgree"))
             ],
           )

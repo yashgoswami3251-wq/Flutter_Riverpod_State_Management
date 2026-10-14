@@ -51,7 +51,7 @@ class _TodoAddingState extends ConsumerState<TodoAdding> {
                       }
 
                       final currenttodos = ref.read(addprovider);
-                      ref.read(addprovider.notifier).state = [...currenttodos,title];
+                      ref.read(addprovider.notifier).state = [title,...currenttodos];
                       
                       Navigator.of(context).pop();
 
@@ -142,3 +142,39 @@ class _edittodoState extends ConsumerState<edittodo> {
 }
 
 
+class deletetodo extends ConsumerStatefulWidget {
+
+  final int index;
+  const deletetodo({super.key, required this.index});
+
+  @override
+  ConsumerState<deletetodo> createState() => _deletetodoState();
+}
+
+class _deletetodoState extends ConsumerState<deletetodo> {
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text("Are you sure to delete this todos",style: TextStyle(fontSize: 18),),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(onPressed: (){
+                ref.read(addprovider.notifier).state.removeAt(widget.index);
+                ref.read(addprovider.notifier).update((state)=>[...state]);
+                Navigator.of(context).pop();
+              }, child: Text("Agree",style: TextStyle(color: Colors.white),)),
+              SizedBox(width: 10,),
+              ElevatedButton(onPressed: (){
+                Navigator.of(context).pop();
+              }, child: Text("DisAgree",style: TextStyle(color: Colors.white),)),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}
