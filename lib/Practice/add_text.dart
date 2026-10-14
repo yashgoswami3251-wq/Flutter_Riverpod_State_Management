@@ -18,8 +18,7 @@ class _addingtextState extends ConsumerState<addingtext> {
   @override
   Widget build(BuildContext context) {
     final textcontroller = TextEditingController();
-    return Scaffold(
-      body: Dialog(
+    return  Dialog(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -39,19 +38,21 @@ class _addingtextState extends ConsumerState<addingtext> {
                 }, child: Text("Close")),
                 TextButton(onPressed: (){
                   final text = textcontroller.text;
+
                   if(text.isEmpty){
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please filled this field")));
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please enter text...")));
                   }
 
-                  final cureenttext = ref.watch(textprovider);
-                  ref.read(textprovider.notifier).state = [...cureenttext,text];
+                  final currenttext = ref.read(textprovider);
+                  ref.read(textprovider.notifier).state = [...currenttext,text];
+
                   Navigator.of(context).pop();
+
                 }, child: Text("Save")),
               ],
             )
           ],
         ),
-      ),
     );
   }
 }
@@ -103,17 +104,18 @@ class _edittextState extends ConsumerState<edittext> {
                 Navigator.of(context).pop();
               }, child: Text("Cancel")),
               ElevatedButton(onPressed: (){
+
                 final newtext = textcontroller.text.trim();
 
                 if(newtext.isEmpty){
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please enter new Value")));
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please update Text")));
                 }
 
                 final currenttext = ref.read(textprovider);
-                final updatedtext = [...currenttext];
+                final updatedext =[...currenttext];
 
-                updatedtext[widget.index] = newtext;
-                ref.read(textprovider.notifier).state = updatedtext;
+                updatedext[widget.index] = newtext;
+                ref.read(textprovider.notifier).state = updatedext;
 
                 Navigator.of(context).pop();
 
@@ -125,5 +127,55 @@ class _edittextState extends ConsumerState<edittext> {
     );
   }
 }
+
+
+class deletetext extends ConsumerStatefulWidget {
+
+  final int index;
+
+  const deletetext({super.key, required this.index});
+
+  @override
+  ConsumerState<deletetext> createState() => _deletetextState();
+}
+
+class _deletetextState extends ConsumerState<deletetext> {
+
+  @override
+  Widget build(BuildContext context) {
+
+    bool isagree = false;
+
+    return Dialog(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text("Are you sure to delete this text",style: TextStyle(fontSize: 18),),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(onPressed: (){
+                isagree = true;
+                if(isagree == true){
+                  ref.read(textprovider.notifier).state.removeAt(widget.index);
+                  ref.read(textprovider.notifier).update((state)=>[...state]);
+
+                  Navigator.of(context).pop();
+                }
+              }, child: Text("Agree")),
+              SizedBox(width: 15,),
+              ElevatedButton(onPressed: (){
+                Navigator.of(context).pop();
+                isagree = false;
+              }, child: Text("DisAgree"))
+            ],
+          )
+        ],
+      ),
+    );;
+  }
+}
+
+
 
 

@@ -23,7 +23,8 @@ class _practiceState extends ConsumerState<practice> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Hello"),
+        title: Center(child: Text("Practice")),
+        backgroundColor: Colors.cyan,
       ),
       body: ListView.builder(
           itemCount: text.length,
@@ -40,7 +41,11 @@ class _practiceState extends ConsumerState<practice> {
                 ));
               }, icon: Icon(Icons.edit)),
               SizedBox(width: 20,),
-              Icon(Icons.delete_outline),
+              IconButton(onPressed: (){
+                showDialog(context: context, builder: (context)=>deletetext(
+                  index: index,
+                ));
+              },icon: Icon(Icons.delete_outline)),
             ],
           ),
         );
