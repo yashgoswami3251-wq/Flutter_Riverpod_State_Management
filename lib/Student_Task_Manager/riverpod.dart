@@ -8,6 +8,10 @@ final taskprovider = StateProvider<List<dynamic>>((Ref ref){
   return [];
 });
 
+final searchqueryprovider = StateProvider<String>((Ref ref){
+  return "";
+});
+
 
 class Addtask extends ConsumerStatefulWidget {
   const Addtask({super.key});
